@@ -14,7 +14,7 @@ export const todosReducer = (state:any, action:any) => {
         case 'ADD_TODO':
             return [...state , action.payload]
         case 'EDIT_TODO':
-            return state.map((el:TaskInterface,_)=>el.id===action.payload.id?action.payload:el)
+            return state.map((el:TaskInterface)=>el.id===action.payload.id?action.payload:el)
         case 'REMOVE_TODO':
             const filteredData = state.filter((el:TaskInterface)=>el.id!==action.payload.id)
             return filteredData
