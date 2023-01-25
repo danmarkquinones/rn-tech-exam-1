@@ -64,21 +64,25 @@ const Todos = () => {
 
     return (
         <div>
-            <input
-                value={form.task}
-                onChange={(e)=>handleChange("task" , e.target.value)}
-            />
-            <button onClick={()=>handleSubmit()}>{form.id?"UPDATE":"ADD"} TODO</button>
-            <ul>
-                {todos?.map((todo:TaskInterface , i:number) => (
-                    <li key={i}>
-                        <span>{todo.id}. {todo.task}</span>
+            <div className='todo-header'><h4>TODO LISTS</h4></div>
+            <div className='todo-form'>
+                <input
+                    value={form.task}
+                    onChange={(e)=>handleChange("task" , e.target.value)}
+                    placeholder="type your todo here"
+                />
+                <button onClick={()=>handleSubmit()}>{form.id?"UPDATE":"ADD"} TODO</button>
+            </div>
+            
+            {todos?.map((todo:TaskInterface , i:number) => (
+                <div key={i} className="todo-list">
+                    <span>{i+1}. {todo.task}</span>
+                    <span>
                         <button onClick={()=>handleEdit(todo)}>EDIT</button>
                         <button onClick={()=>handleDelete(todo)}>REMOVE</button>
-                    </li>
-                ))}
-            </ul>
-            
+                    </span>
+                </div>
+            ))}
         </div>
     );
 };

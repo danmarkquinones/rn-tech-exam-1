@@ -33,7 +33,9 @@ export const questionOne =`class MyComponent extends React.Component {
         }
       }`
 
-export const qOneAnswer = `const QuestionOne = (props:any) => {
+export const qOneAnswer = `import React , {useState} from 'react'
+
+const Counter = (props:any) => {
 
     const [counter , setCounter] = useState<number>(0)
 
@@ -48,15 +50,13 @@ export const qOneAnswer = `const QuestionOne = (props:any) => {
     )
 }
 
-export default QuestionOne`
+export default Counter`
 
 export const questionTwo = `const todosReducer = (state, action) => { 
     switch (action.type) {
       case 'ADD_TODO':
       case 'REMOVE_TODO':
     }
-   
-   
    };
    
    const TodoList = () => {
@@ -92,14 +92,14 @@ export const todosReducer = (state:any, action:any) => {
         case 'ADD_TODO':
             return [...state , action.payload]
         case 'EDIT_TODO':
-            return state.map((el:TaskInterface,_)=>el.id===action.payload.id?action.payload:el)
+            return state.map((el:TaskInterface)=>el.id===action.payload.id?action.payload:el)
         case 'REMOVE_TODO':
             const filteredData = state.filter((el:TaskInterface)=>el.id!==action.payload.id)
             return filteredData
     }
 };
    
-export const TodoListUsingReducer = () => {
+const Todos = () => {
 
     const [todos, dispatch] = useReducer(todosReducer, initialState);
     const [form , setForm] = useState<TaskInterface>({
@@ -142,25 +142,30 @@ export const TodoListUsingReducer = () => {
 
     return (
         <div>
-            <input
-                value={form.task}
-                onChange={(e)=>handleChange("task" , e.target.value)}
-            />
-            <button onClick={()=>handleSubmit()}>{form.id?"UPDATE":"ADD"} TODO</button>
-            <ul>
-                {todos?.map((todo:TaskInterface , i:number) => (
-                    <li key={i}>
-                        <span>{todo.id}. {todo.task}</span>
+            <div className='todo-header'><h4>TODO LISTS</h4></div>
+            <div className='todo-form'>
+                <input
+                    value={form.task}
+                    onChange={(e)=>handleChange("task" , e.target.value)}
+                    placeholder="type your todo here"
+                />
+                <button onClick={()=>handleSubmit()}>{form.id?"UPDATE":"ADD"} TODO</button>
+            </div>
+            
+            {todos?.map((todo:TaskInterface , i:number) => (
+                <div key={i} className="todo-list">
+                    <span>{i+1}. {todo.task}</span>
+                    <span>
                         <button onClick={()=>handleEdit(todo)}>EDIT</button>
                         <button onClick={()=>handleDelete(todo)}>REMOVE</button>
-                    </li>
-                ))}
-            </ul>
-            
+                    </span>
+                </div>
+            ))}
         </div>
     );
 };
-`
+
+export default Todos`
 
 export const questionThree = `[
     {
@@ -206,9 +211,9 @@ export const qThreeAnswer = `const DataStructure = (props:any) => {
 
     return(
         <div>
-            <p>
-                {JSON.stringify(data)}
-            </p>
+            <pre id='json'>
+                {JSON.stringify(data , undefined , 2)}
+            </pre>
         </div>
     )
 }

@@ -43,9 +43,9 @@ const DataStructure = (props:any) => {
 
     return(
         <div>
-            <p>
-                {JSON.stringify(data)}
-            </p>
+            <pre id='json'>
+                {JSON.stringify(data , undefined , 2)}
+            </pre>
         </div>
     )
 }
